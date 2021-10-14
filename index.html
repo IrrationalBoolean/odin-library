@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>library</title>
+    <link href='styles.css' rel='stylesheet'/>
+  </head>
+  <body>
+    <div class='container'>
+      <h1>Current Books</h1>
+      <div class='open-form' onclick="toggleForm()">
+        Click here to add another book.
+      </div>
+      <div class='the-form disappeared'>
+        <h2>Add a Book</h2>
+        <div class='add'>
+          <div class='form-labels'>
+            <label for="title">Title</label>
+            <label for="author">Author</label>
+            <label for="pages">Pages</label>
+            <label for="read">Read?</label>
+          </div>
+          <div class='form-inputs'>
+            <input type="text" id="form-title" name="title" value=""><br>
+            <input type="text" id="form-author" name="author" value=""><br>
+            <input type="text" id="form-pages" name="pages" value=""><br>
+            <div class='submit-new'>
+              <input type="checkbox" id="form-read" name="read" value=""><button onclick="submitNewBook()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src='script.js'></script>
+  </body>
+
+</html>

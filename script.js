@@ -4,7 +4,7 @@ function Book(title, author, pages, read){
   this.pages=pages
   this.read=read
   this.info = function() {
-    console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "you've read this title" : "you've not yet read this title"}`) 
+    console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "you've read this title" : "you've not yet read this title"}`)
   };
 };
 
@@ -28,7 +28,23 @@ function submitNewBook(){
 
     toggleForm()
     setIDs()
+    setLibrary()
   }
+}
+
+function getLibrary(){
+  let x = window.localStorage.getItem('books')
+  console.log(x)
+  if (x) {
+    return JSON.parse(x)
+  } else {
+    return []
+  }
+}
+
+function setLibrary(){
+  window.localStorage.removeItem('books')
+  window.localStorage.setItem('books', JSON.stringify(myLibrary))
 }
 
 function setIDs(){
@@ -45,8 +61,8 @@ function removeBook(e){
   e.parentElement.parentElement.remove()
   console.log(myLibrary)
   setIDs()
+  setLibrary()
   event.stopPropagation()
-  
 }
 
 function addBookToPage(book){
@@ -81,6 +97,7 @@ function addBookToPage(book){
   cont.appendChild(card)
   addBookToLibrary(book)
   setIDs()
+  setLibrary()
 }
 
 function toggleRead(e){
@@ -89,6 +106,7 @@ function toggleRead(e){
   console.log(myLibrary[e.parentNode.dataset.id].read)
   myLibrary[e.parentNode.dataset.id].read = !myLibrary[e.parentNode.dataset.id].read
   console.log(myLibrary[e.parentNode.dataset.id].read)
+  setLibrary()
 }
 
 function toggleForm(){
@@ -98,17 +116,11 @@ function toggleForm(){
   form.classList.toggle('disappeared')
 }
 
+loadLibrary = getLibrary()
+console.log(loadLibrary)
+myLibrary = []
 
-
-let myLibrary = []
-
-let book4 = new Book("Cannibal Carnivals", "Jane Martinson", 2040, false)
-let book2 = new Book("The Dude", "A Dude", 2378, false)
-let book3 = new Book("The Digital Filmmaking Handbook", "Mark Brindle", 222, true)
-
-/* addBookToLibrary(book1) */
-addBookToPage(book4)
-addBookToPage(book2)
-addBookToPage(book3)
-
+for (let i=0; i<loadLibrary.length; i++){
+  addBookToPage(loadLibrary[i])
+}
 

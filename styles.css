@@ -9,6 +9,10 @@ html, body {
 }
 
 
+.close-card {
+  text-align: center;
+  background-color: #999;
+}
 
 
 .container {
@@ -31,7 +35,7 @@ html, body {
   border: solid black 1px;
   background-color: #666
   padding: 10px;
-  }
+}
 
 .add {
   display: flex;

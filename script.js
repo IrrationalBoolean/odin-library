@@ -45,6 +45,7 @@ function removeBook(e){
   e.parentElement.parentElement.remove()
   console.log(myLibrary)
   setIDs()
+  event.stopPropagation()
   
 }
 
@@ -85,6 +86,9 @@ function addBookToPage(book){
 function toggleRead(e){
   e.classList.toggle('unread')
   e.classList.toggle('read')
+  console.log(myLibrary[e.parentNode.dataset.id].read)
+  myLibrary[e.parentNode.dataset.id].read = !myLibrary[e.parentNode.dataset.id].read
+  console.log(myLibrary[e.parentNode.dataset.id].read)
 }
 
 function toggleForm(){
@@ -98,8 +102,7 @@ function toggleForm(){
 
 let myLibrary = []
 
-let book4 = new Book("Cannibal Cannabis", "Mary Jane", 420, false)
-let book1 = new Book("The Bible", "Man", 2000, true)
+let book4 = new Book("Cannibal Carnivals", "Jane Martinson", 2040, false)
 let book2 = new Book("The Dude", "A Dude", 2378, false)
 let book3 = new Book("The Digital Filmmaking Handbook", "Mark Brindle", 222, true)
 

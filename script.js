@@ -1,11 +1,11 @@
 function Book(title, author, pages, read){
-    this.title=title
-    this.author=author
-    this.pages=pages
-    this.read=read
-    this.info = function() {
-        console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "you've read this title" : "you've not yet read this title"}`) 
-    };
+  this.title=title
+  this.author=author
+  this.pages=pages
+  this.read=read
+  this.info = function() {
+    console.log(`${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "you've read this title" : "you've not yet read this title"}`) 
+  };
 };
 
 function addBookToLibrary(book){
@@ -19,20 +19,34 @@ function submitNewBook(){
   const read = document.querySelector('#form-read')
 
   if (title.value && author.value && pages.value){
-  newBook = new Book(title.value, author.value, pages.value, read.checked)
-  addBookToPage(newBook)
-  title.value = ''
-  author.value = ''
-  pages.value = ''
-  read.checked = false
+    newBook = new Book(title.value, author.value, pages.value, read.checked)
+    addBookToPage(newBook)
+    title.value = ''
+    author.value = ''
+    pages.value = ''
+    read.checked = false
 
-  toggleForm()
-
+    toggleForm()
+    setIDs()
   }
 }
 
+function setIDs(){
+  const cards = document.querySelectorAll('.card')
+  for (let i = 0; i < cards.length; i++) {
+    cards[i].dataset.id = i
+  }
+}
 
-
+function removeBook(e){
+  let idx = e.parentElement.parentElement.dataset.id
+  console.log(idx)
+  myLibrary.splice(idx, 1)
+  e.parentElement.parentElement.remove()
+  console.log(myLibrary)
+  setIDs()
+  
+}
 
 function addBookToPage(book){
   const cont = document.querySelector(".container")
@@ -45,11 +59,14 @@ function addBookToPage(book){
   const close = document.createElement("div")
 
   card.setAttribute("class", "card")
+  card.setAttribute("data-id", myLibrary.length)
   cardtext.setAttribute("class", "cardtext")
   readbar.setAttribute("class", `readbar ${book.read ? "read" : "unread"}`)
   readbar.setAttribute("onclick","toggleRead(this)")
 
   close.textContent = "x"
+  close.setAttribute("class", "close-card")
+  close.setAttribute("onclick", "removeBook(this)")
   title.textContent = book.title
   author.textContent = book.author
   pages.textContent = `${book.pages} pages long`
@@ -59,7 +76,10 @@ function addBookToPage(book){
   cardtext.appendChild(title)
   cardtext.appendChild(author)
   cardtext.appendChild(pages)
+  readbar.appendChild(close)
   cont.appendChild(card)
+  addBookToLibrary(book)
+  setIDs()
 }
 
 function toggleRead(e){
@@ -78,19 +98,14 @@ function toggleForm(){
 
 let myLibrary = []
 
-let book1 = new Book("The Bible", "Man", 2000, true)
-let book2 = new Book("The Godfather", "A Dude", 2378, false)
-let book3 = new Book("The Digital Filmmaking Handbook", "Mark Brindle", 222, true)
 let book4 = new Book("Cannibal Cannabis", "Mary Jane", 420, false)
+let book1 = new Book("The Bible", "Man", 2000, true)
+let book2 = new Book("The Dude", "A Dude", 2378, false)
+let book3 = new Book("The Digital Filmmaking Handbook", "Mark Brindle", 222, true)
 
-addBookToLibrary(book1)
-addBookToLibrary(book2)
-addBookToLibrary(book3)
-addBookToLibrary(book4)
+/* addBookToLibrary(book1) */
+addBookToPage(book4)
+addBookToPage(book2)
+addBookToPage(book3)
 
 
-for (let i = 0; i < myLibrary.length; i++){
-  console.log(i)
-  addBookToPage(myLibrary[i])
-  console.log([myLibrary[i], i])
-}
